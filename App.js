@@ -13,6 +13,7 @@ export default function App() {
   return (
     <View style={[styles.container, themeContainerStyle]}>
       <Text style={[styles.text, themeTextStyle]}>Color scheme: {colorScheme}</Text>
+      <Image source={require('./assets/mobileLogo.png')} />
       <Text>Phone Buddy!</Text>
       <StatusBar style="auto" />
     </View>
