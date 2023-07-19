@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Button, List, Modal, TextInput } from 'react-native-paper';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import * as MediaLibrary from 'expo-media-library';
+
 
 const HomeScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [entryText, setEntryText] = useState('');
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { photo } = route.params || {};
 
   const handleAddEntry = () => {
     setIsModalVisible(true);
@@ -13,12 +19,25 @@ const HomeScreen = () => {
   const handleSaveEntry = () => {
     setIsModalVisible(false);
     Keyboard.dismiss();
+    // Saves the journal entry with the photo
+    // Use the captured photo along with the entryText
+    console.log('Entry:', entryText);
+    console.log('Photo:', photo);
   };
 
   const handleCloseModal = () => {
     setIsModalVisible(false);
     Keyboard.dismiss();
   };
+
+  useEffect(() => {
+    if (photo) {
+      // Do something with the captured photo
+      console.log(photo);
+    }
+  }, [photo]);
+
+
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -64,6 +83,8 @@ const HomeScreen = () => {
     </TouchableWithoutFeedback>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -116,7 +137,10 @@ const styles = StyleSheet.create({
   },
 });
 
+
+
 export default HomeScreen;
+
 
 
 
