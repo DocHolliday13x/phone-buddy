@@ -1,25 +1,42 @@
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, useColorScheme, Image, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, useColorScheme } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import Navigation from './Navigation';
+
+
+
+const [isDarkMode, setIsDarkMode] = useState(false);
+
+const handleToggleMode = () => {
+  setIsDarkMode(!isDarkMode);
+};
 
 
 
 export default function App() {
   const colorScheme = useColorScheme();
 
-  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
-  const themeContainerStyle =
-    colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+  const themeContainerStyle = isDarkMode ? styles.darkContainer : styles.lightContainer;
+  const themeTextStyle = isDarkMode ? styles.darkThemeText : styles.lightThemeText;
+  
 
   return (
     <View style={[styles.container, themeContainerStyle]}>
-      <Text style={[styles.text, themeTextStyle]}>Color scheme: {colorScheme}</Text>
-      <Image source={require('./assets/mobileLogo.png')} />
-      <Text>Phone Buddy!</Text>
       <StatusBar style="auto" />
+      <TouchableOpacity style={styles.toggleButton} onPress={handleToggleMode}>
+      <AntDesign name={isDarkMode ? 'bulb1' : 'bulb2'} size={24} color="black" />
+    </TouchableOpacity>
+      <Image
+        source={require('./assets/mobileLogo.png')}
+      />
+      <Text
+        style={{ fontSize: 30, marginBottom: 30, ...themeTextStyle }}
+      >Phone Buddy!</Text>
+      <Navigation />
     </View>
   );
 }
-
 
 
 const styles = StyleSheet.create({
@@ -40,4 +57,11 @@ const styles = StyleSheet.create({
   darkThemeText: {
     color: '#dedede',
   },
+  toggleButton: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    zIndex: 1,
+  },
+  
 });
