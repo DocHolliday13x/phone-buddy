@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, useColorScheme, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, useColorScheme, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import Navigation from './Navigation';
@@ -27,9 +27,6 @@ export default function App() {
       <TouchableOpacity style={styles.toggleButton} onPress={handleToggleMode}>
       <AntDesign name={isDarkMode ? 'bulb1' : 'bulb2'} size={24} color="black" />
     </TouchableOpacity>
-      <Image
-        source={require('./assets/mobileLogo.png')}
-      />
       <Text
         style={{ fontSize: 30, marginBottom: 30, ...themeTextStyle }}
       >Phone Buddy!</Text>
