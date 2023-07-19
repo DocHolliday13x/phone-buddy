@@ -1,25 +1,37 @@
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, useColorScheme, TouchableOpacity, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, useColorScheme } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Navigation from './Navigation';
 
-
+const windowWidth = Dimensions.get('window').width;
 
 export default function App() {
+
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const handleToggleMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   const colorScheme = useColorScheme();
 
-  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
-  const themeContainerStyle =
-    colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+  const themeContainerStyle = isDarkMode ? styles.darkContainer : styles.lightContainer;
+  const themeTextStyle = isDarkMode ? styles.darkThemeText : styles.lightThemeText;
+  
 
   return (
     <View style={[styles.container, themeContainerStyle]}>
-      <Text style={[styles.text, themeTextStyle]}>Color scheme: {colorScheme}</Text>
-      <Image source={require('./assets/mobileLogo.png')} />
-      <Text>Phone Buddy!</Text>
       <StatusBar style="auto" />
+      <TouchableOpacity style={styles.toggleButton} onPress={handleToggleMode}>
+        <MaterialCommunityIcons name="theme-light-dark" size={24} color="black" />
+      </TouchableOpacity>
+      <View style={[styles.contentContainer, { width: windowWidth }]}>
+        <Navigation />
+      </View>
     </View>
   );
 }
-
 
 
 const styles = StyleSheet.create({
@@ -27,6 +39,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    width:'100%',
+    height:'100%',
   },
   lightContainer: {
     backgroundColor: '#dedede',
@@ -40,4 +54,11 @@ const styles = StyleSheet.create({
   darkThemeText: {
     color: '#dedede',
   },
+  toggleButton: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    zIndex: 1,
+  },
+  
 });
