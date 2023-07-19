@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, useColorScheme, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, useColorScheme, TouchableOpacity, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Navigation from './Navigation';
 
-
-
-const [isDarkMode, setIsDarkMode] = useState(false);
-
-const handleToggleMode = () => {
-  setIsDarkMode(!isDarkMode);
-};
-
-
+const windowWidth = Dimensions.get('window').width;
 
 export default function App() {
+
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const handleToggleMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   const colorScheme = useColorScheme();
 
   const themeContainerStyle = isDarkMode ? styles.darkContainer : styles.lightContainer;
@@ -25,12 +24,11 @@ export default function App() {
     <View style={[styles.container, themeContainerStyle]}>
       <StatusBar style="auto" />
       <TouchableOpacity style={styles.toggleButton} onPress={handleToggleMode}>
-      <AntDesign name={isDarkMode ? 'bulb1' : 'bulb2'} size={24} color="black" />
-    </TouchableOpacity>
-      <Text
-        style={{ fontSize: 30, marginBottom: 30, ...themeTextStyle }}
-      >Phone Buddy!</Text>
-      <Navigation />
+        <MaterialCommunityIcons name="theme-light-dark" size={24} color="black" />
+      </TouchableOpacity>
+      <View style={[styles.contentContainer, { width: windowWidth }]}>
+        <Navigation />
+      </View>
     </View>
   );
 }
@@ -41,6 +39,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    width:'100%',
+    height:'100%',
   },
   lightContainer: {
     backgroundColor: '#dedede',

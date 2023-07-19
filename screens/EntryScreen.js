@@ -29,8 +29,9 @@ const EntryScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent:'center',
     paddingHorizontal: 20,
-    paddingVertical: 30,
   },
   input: {
     marginBottom: 20,
